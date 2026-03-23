@@ -1,0 +1,33 @@
+[general]
+name=RasterStatsPlus
+description=Calcolo avanzato di statistiche raster con tabella, istogramma e funzioni di esportazione.
+about=Plugin per QGIS che calcola statistiche estese su layer raster, visualizza i risultati in tabella, genera un istogramma e permette l’esportazione in TXT/CSV e PNG/SVG.
+category=Raster
+icon=resources/images/iconstatist.png
+tags=raster,statistics,analysis,histogram,export
+
+# credits and contact
+author=Dr. geol. Faustino Cetraro
+email=geol-faustino@libero.it
+homepage=https://github.com/drFaustino/Raster-Stats-Plus
+repository=https://github.com/drFaustino/Raster-Stats-Plus
+tracker=https://github.com/drFaustino/Raster-Stats-Plus
+
+# QGIS context
+deprecated=False
+experimental=False
+hasProcessingProvider=False
+supportsQt6=True
+qgisMinimumVersion=4.0
+qgisMaximumVersion=4.99
+
+# versioning
+version=0.1.0
+changelog=
+ Version 0.1.0:
+ - Prima versione del plugin RasterStatsPlus
+ - Calcolo statistiche raster base e avanzate
+ - Visualizzazione tabellare dei risultati
+ - Istogramma integrato nella GUI
+ - Esportazione TXT/CSV
+ - Salvataggio grafico PNG/SVG
