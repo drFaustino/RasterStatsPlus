@@ -9,9 +9,9 @@ tags=raster,statistics,analysis,histogram,export
 # credits and contact
 author=Dr. geol. Faustino Cetraro
 email=geol-faustino@libero.it
-homepage=https://github.com/drFaustino/Raster-Stats-Plus
-repository=https://github.com/drFaustino/Raster-Stats-Plus
-tracker=https://github.com/drFaustino/Raster-Stats-Plus
+homepage=https://github.com/drFaustino/RasterStatsPlus
+repository=https://github.com/drFaustino/RasterStatsPlus
+tracker=https://github.com/drFaustino/RasterStatsPlus
 
 # QGIS context
 deprecated=False
