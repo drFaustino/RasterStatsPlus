@@ -1,7 +1,7 @@
 [general]
 name=RasterStatsPlus
-description=Calcolo avanzato di statistiche raster con tabella, istogramma e funzioni di esportazione.
-about=Plugin per QGIS che calcola statistiche estese su layer raster, visualizza i risultati in tabella, genera un istogramma e permette l’esportazione in TXT/CSV e PNG/SVG.
+description=Calculates extended statistics on raster layers, displays results in a table, generates histograms, and allows exporting to TXT/CSV and PNG/SVG, providing advanced raster analysis with integrated visualization tools.
+about=Raster-derived statistics describe both the spatial structure and the distribution of pixel values. The Cell size X and Cell size Y parameters indicate pixel dimensions in both directions of the reference system, defining the dataset's spatial resolution. Min and Max represent the lowest and highest values in the raster, while the Range expresses the total span as the difference between them. The Mean provides a central measure of the distribution, complemented by Variance and Stddev (standard deviation), which quantify data dispersion. The Median represents the central value and is less sensitive to outliers, while the p5, p25, p75, and p95 percentiles identify key distribution thresholds, useful for detecting extreme values or data concentration. The IQR (Interquartile Range), calculated as p75 − p25, measures 'robust' variability by ignoring extremes. Shape indices like Skewness and Kurtosis describe asymmetry and the 'peakedness' of the distribution, highlighting anomalous tails or peaks. Finally, the Coeff_var (coefficient of variation) expresses relative variability by relating the standard deviation to the mean, making it ideal for comparing rasters with different scales.
 category=Raster
 icon=resources/images/iconstatist.png
 tags=raster,statistics,analysis,histogram,export
@@ -9,25 +9,44 @@ tags=raster,statistics,analysis,histogram,export
 # credits and contact
 author=Dr. geol. Faustino Cetraro
 email=geol-faustino@libero.it
-homepage=https://github.com/drFaustino/RasterStatsPlus
-repository=https://github.com/drFaustino/RasterStatsPlus
-tracker=https://github.com/drFaustino/RasterStatsPlus
+homepage=https://github.com/drFaustino/Raster-Stats-Plus
+repository=https://github.com/drFaustino/Raster-Stats-Plus
+tracker=https://github.com/drFaustino/Raster-Stats-Plus
 
 # QGIS context
 deprecated=False
 experimental=False
 hasProcessingProvider=False
-supportsQt6=True
 qgisMinimumVersion=4.0
 qgisMaximumVersion=4.99
 
 # versioning
-version=0.1.0
+version=1.0.0
+
 changelog=
- Version 0.1.0:
- - Prima versione del plugin RasterStatsPlus
- - Calcolo statistiche raster base e avanzate
- - Visualizzazione tabellare dei risultati
- - Istogramma integrato nella GUI
- - Esportazione TXT/CSV
- - Salvataggio grafico PNG/SVG
+  Version 1.0.0 
+    - Improved CRS handling and raster statistics robustness
+    - Added explicit import of `QgsRasterBandStats` for QGIS 4 compatibility.
+    - Fixed crash caused by uninitialized variables (`value_range`, `var`, `iqr`) when raster contains only NoData.
+    - Improved NoData detection:
+    - Now reads both provider NoData and user-defined NoData ranges.
+    -Correctly counts NoData pixels in all raster formats.
+    - Added automatic resolution conversion for geographic CRS (e.g., EPSG:4326):
+    - Pixel size is now computed in meters using on‑the‑fly transformation to EPSG:3857.
+    - Prevents `Cell size x = 0` and `Cell size y = 0` issues in lat/long rasters.
+    - Improved statistical computation:
+    - Safe initialization of all metrics.
+    - Robust handling of constant-value rasters.
+    - More stable skewness and kurtosis computation.
+    - General code cleanup and improved numerical stability.
+
+  Version 0.1.1:
+    - Removed unused field `plugin_dependencies=` from metadata.
+
+  Version 0.1.0:
+    - First release of the RasterStatsPlus plugin
+    - Basic and advanced raster statistics
+    - Tabular visualization of results
+    - Integrated histogram in the GUI
+    - TXT/CSV export
+    - PNG/SVG graphic export

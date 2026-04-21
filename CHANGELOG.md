@@ -1,5 +1,23 @@
 # RasterStatsPlus — Changelog
 
+## 1.1.0 — 2026-04-21
+### Improved CRS handling and raster statistics robustness
+- Added explicit import of `QgsRasterBandStats` for QGIS 4 compatibility.
+- Fixed crash caused by uninitialized variables (`value_range`, `var`, `iqr`) when raster contains only NoData.
+- Improved NoData detection:
+  - Now reads both provider NoData and user-defined NoData ranges.
+  - Correctly counts NoData pixels in all raster formats.
+- Added automatic resolution conversion for geographic CRS (e.g., EPSG:4326):
+  - Pixel size is now computed in meters using on‑the‑fly transformation to EPSG:3857.
+  - Prevents `Cell size x = 0` and `Cell size y = 0` issues in lat/long rasters.
+- Improved statistical computation:
+  - Safe initialization of all metrics.
+  - Robust handling of constant-value rasters.
+  - More stable skewness and kurtosis computation.
+- General code cleanup and improved numerical stability.
+
+---
+
 ## [1.0.0] — 2026-03-23
 ### Aggiunto
 - Prima release per la versione 4 di QGIS in Qt6 pubblica del plugin RasterStatsPlus.
