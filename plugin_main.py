@@ -9,7 +9,7 @@ from .processing.stats_core import compute_raster_stats
 from .processing.export_core import stats_to_text, export_stats_csv
 from .processing.plot_export import save_histogram
 from .toolbelt.qgis_helpers import format_stats
-
+from qgis.PyQt.QtCore import QCoreApplication
 
 class RasterStatsPlusPlugin:
     def __init__(self, iface):
@@ -18,16 +18,19 @@ class RasterStatsPlusPlugin:
         self.dlg = None
         self._last_stats = None
         self._last_values = None
+    
+    def tr(self, message):
+        return QCoreApplication.translate("RasterStatsPlus", message)
 
     def initGui(self):
         icon = os.path.join(self.plugin_dir, "resources", "images", "icon_24.png")
-        self.action = QAction(QIcon(icon), "Raster Stats Plus", self.iface.mainWindow())
+        self.action = QAction(QIcon(icon), self.tr("Raster Stats Plus"), self.iface.mainWindow())
         self.action.triggered.connect(self.run)
-        self.iface.addPluginToRasterMenu("Raster Stats Plus", self.action)
+        self.iface.addPluginToRasterMenu(self.tr("Raster Stats Plus"), self.action)
         self.iface.addToolBarIcon(self.action)
 
     def unload(self):
-        self.iface.removePluginRasterMenu("Raster Stats Plus", self.action)
+        self.iface.removePluginRasterMenu(self.tr("Raster Stats Plus"), self.action)
         self.iface.removeToolBarIcon(self.action)
 
     def run(self):
@@ -73,12 +76,12 @@ class RasterStatsPlusPlugin:
     def _compute(self):
         raster = self._get_raster()
         if not raster:
-            QMessageBox.warning(self.dlg, "Raster Stats Plus", "Seleziona un raster.")
+            QMessageBox.warning(self.dlg, self.tr("Raster Stats Plus"), self.tr("Seleziona un raster."))
             return
 
         band = self.dlg.cmbBand.currentData()
         if not band:
-            QMessageBox.warning(self.dlg, "Raster Stats Plus", "Seleziona una banda.")
+            QMessageBox.warning(self.dlg, self.tr("Raster Stats Plus"), self.tr("Seleziona una banda."))
             return
 
         stats, values = compute_raster_stats(
@@ -108,12 +111,12 @@ class RasterStatsPlusPlugin:
 
     def _export_stats(self):
         if not self._last_stats:
-            QMessageBox.information(self.dlg, "Raster Stats Plus", "Nessun risultato da esportare.")
+            QMessageBox.information(self.dlg, self.tr("Raster Stats Plus"), self.tr("Nessun risultato da esportare."))
             return
 
         path, _ = QFileDialog.getSaveFileName(
             self.dlg,
-            "Esporta risultati",
+            self.tr("Esporta risultati"),
             "",
             "TXT (*.txt);;CSV (*.csv)"
         )
@@ -128,16 +131,16 @@ class RasterStatsPlusPlugin:
         else:
             export_stats_csv(path, self._last_stats)
 
-        QMessageBox.information(self.dlg, "Raster Stats Plus", "Esportazione completata.")
+        QMessageBox.information(self.dlg, self.tr("Raster Stats Plus"), self.tr("Esportazione completata."))
 
     def _save_graph(self):
         if self._last_values is None or self._last_values.size == 0:
-            QMessageBox.information(self.dlg, "Raster Stats Plus", "Nessun istogramma da salvare.")
+            QMessageBox.information(self.dlg, self.tr("Raster Stats Plus"), self.tr("Nessun istogramma da salvare."))
             return
 
         path, _ = QFileDialog.getSaveFileName(
             self.dlg,
-            "Salva istogramma",
+            self.tr("Salva istogramma"),
             "",
             "PNG (*.png);;SVG (*.svg)"
         )
@@ -145,7 +148,7 @@ class RasterStatsPlusPlugin:
             return
 
         save_histogram(self.dlg.histCanvas.get_figure(), path)
-        QMessageBox.information(self.dlg, "Raster Stats Plus", "Istogramma salvato correttamente.")
+        QMessageBox.information(self.dlg, self.tr("Raster Stats Plus"), self.tr("Istogramma salvato correttamente."))
 
     def _reset(self):
         # Reset variabili interne
